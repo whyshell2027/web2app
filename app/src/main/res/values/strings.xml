@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- app_name 和 splash_tagline 均由 build.gradle 从 config.properties 动态注入 -->
+</resources>

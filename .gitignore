@@ -1,0 +1,50 @@
+# ── Gradle ───────────────────────────────────────────────────────────────────
+.gradle/
+build/
+**/build/
+gradle-app.setting
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# ── Android Studio / IntelliJ ─────────────────────────────────────────────────
+*.iml
+.idea/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+.idea/caches
+.idea/modules.xml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# ── Local configuration (device-specific, never commit) ──────────────────────
+local.properties
+
+# ── Signing keys (IMPORTANT: never commit to public repos) ───────────────────
+*.jks
+*.keystore
+*.p12
+
+# ── APK / AAB outputs ─────────────────────────────────────────────────────────
+*.apk
+*.aab
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ── Windows ───────────────────────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ── Linux ─────────────────────────────────────────────────────────────────────
+*~
+
+# ── Claude Code internal ──────────────────────────────────────────────────────
+.claude/

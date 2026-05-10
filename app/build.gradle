@@ -1,0 +1,89 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+// ── 读取根目录 config.properties（UTF-8，支持中文）──────────────────────────
+def cfg = new Properties()
+rootProject.file("config.properties").newReader("UTF-8").withCloseable { cfg.load(it) }
+
+def cfgUrl          = cfg.getProperty('TARGET_URL',     'https://example.com')
+def cfgAppName      = cfg.getProperty('APP_NAME',       'WebApp')
+def cfgAppId        = cfg.getProperty('APP_ID',         'com.webtoapp.app')
+def cfgVersionCode  = cfg.getProperty('VERSION_CODE',   '1').toInteger()
+def cfgVersionName  = cfg.getProperty('VERSION_NAME',   '1.0')
+def cfgInitialScale = cfg.getProperty('INITIAL_SCALE',  '100').toInteger()
+def cfgIconBgColor  = cfg.getProperty('ICON_BG_COLOR',  '#1a1a2e')
+def cfgTagline      = cfg.getProperty('SPLASH_TAGLINE', '')
+// ────────────────────────────────────────────────────────────────────────────
+
+// ── 签名配置（本地 .jks 文件 或 CI 环境变量）───────────────────────────────
+def signingStorePath = System.getenv("KEYSTORE_PATH")      ?: rootProject.file("drug-release.jks").absolutePath
+def signingStorePass = System.getenv("KEY_STORE_PASSWORD") ?: "wkcanamA12398"
+def signingKeyAlias  = System.getenv("KEY_ALIAS")          ?: "drugo"
+def signingKeyPass   = System.getenv("KEY_PASSWORD")       ?: "wkcanamA12398"
+def hasKeystore      = new File(signingStorePath).exists()
+// ────────────────────────────────────────────────────────────────────────────
+
+android {
+    namespace 'space.bigai.drugo'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId cfgAppId
+        minSdk 21
+        targetSdk 35
+        versionCode cfgVersionCode
+        versionName cfgVersionName
+
+        buildConfigField "String", "TARGET_URL",    "\"${cfgUrl}\""
+        buildConfigField "int",    "INITIAL_SCALE", "${cfgInitialScale}"
+        resValue         "string", "app_name",        cfgAppName
+        resValue         "string", "splash_tagline",  cfgTagline
+        resValue         "color",  "icon_bg_color",  cfgIconBgColor
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    signingConfigs {
+        release {
+            storeFile     file(signingStorePath)
+            storePassword signingStorePass
+            keyAlias      signingKeyAlias
+            keyPassword   signingKeyPass
+        }
+    }
+
+    buildTypes {
+        release {
+            if (hasKeystore) {
+                signingConfig signingConfigs.release
+            }
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.activity:activity-ktx:1.8.2'
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="splash_bg">#1a1a2e</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="colorPrimary">#1a1a2e</color>
+    <color name="colorPrimaryVariant">#16213e</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorSecondary">#0f3460</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
+</resources>
